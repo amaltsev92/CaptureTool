@@ -16,7 +16,7 @@ namespace CaptureTool
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Preferences_Window());
         }
     }
 }
