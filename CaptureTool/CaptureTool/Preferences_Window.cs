@@ -41,5 +41,6 @@ namespace CaptureTool
         {
             this.WindowState = FormWindowState.Minimized;
         }
+
     }
 }
