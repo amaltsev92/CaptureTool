@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MakeScreenshot.cs" />
     <Compile Include="Preferences_Window.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +54,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadKeyThread.cs" />
     <EmbeddedResource Include="Preferences_Window.resx">
       <DependentUpon>Preferences_Window.cs</DependentUpon>
     </EmbeddedResource>
