@@ -10,17 +10,33 @@ namespace CaptureTool
 {
     class MakeScreenshot
     {
-        public static void Make_Full_Screenshot()
+        private static void Make_Screenshot(int offsetX, int offsetY, int widthArea, int heightArea, string pathToSave)
         {
             Graphics graph = null;
 
-            var bmp = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            var bmp = new Bitmap(widthArea, heightArea);
 
             graph = Graphics.FromImage(bmp);
 
-            graph.CopyFromScreen(0, 0, 0, 0, bmp.Size);
+            graph.CopyFromScreen(offsetX, offsetY, 0, 0, bmp.Size);
 
-            bmp.Save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + DateTime.Now.ToString().Replace(':', '_') + ".bmp");
+            bmp.Save(pathToSave);
+        }
+
+        public static void Make_Full_Screenshot()
+        {
+
+            int countScreen = 1;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                string pathToSave = (Environment.GetFolderPath(Environment.SpecialFolder.Desktop) 
+                    + "\\" + "Screen_" + countScreen.ToString() + " " 
+                    + DateTime.Now.ToString().Replace(':', '_') + ".bmp");
+                ++countScreen;
+
+                Make_Screenshot(screen.Bounds.X, screen.Bounds.Y, screen.Bounds.Width, screen.Bounds.Height, pathToSave);
+            }
         }
     }
 }
