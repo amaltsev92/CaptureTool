@@ -15,12 +15,9 @@ namespace CaptureTool
     {
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
+        private const int WM_KEYUP = 0x0101;
 
-        private const int Key_Ctrl = 162;
-        private const int Key_4 = 52;
-
-        private static bool m_Flag_Key_Ctrl_Press = false;
-        private static bool m_Flag_Key_4_Press = false;
+        private static bool flag_Activate_EditMode = false;
 
         private static int s_vkCode = 0;
         private static LowLevelKeyboardProc s_proc = HookCallback;
@@ -40,31 +37,45 @@ namespace CaptureTool
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+            if (nCode >= 0)
             {
+                int iKey = wParam.ToInt32();
                 s_vkCode = Marshal.ReadInt32(lParam);
 
-                if ((s_vkCode != Key_Ctrl) && (s_vkCode != Key_4))
+                switch (iKey)
                 {
-                    m_Flag_Key_4_Press = false;
-                    m_Flag_Key_Ctrl_Press = false;
-                }
+                    case WM_KEYDOWN:
+                        PressedKeys.SavePressedKey(s_vkCode);
 
-                if (s_vkCode == Key_Ctrl)
-                {
-                    m_Flag_Key_Ctrl_Press = true;
-                }
+                        if (flag_Activate_EditMode == false)
+                        {
+                            PressedKeys.CheckPressedKeys();
+                        }
+                        else
+                        {
+                            WorkWithSystemFiles.Events.CheckNewKeys(EventArgs.Empty);
+                        }
+                        break;
 
-                if (s_vkCode == Key_4)
-                {
-                    m_Flag_Key_4_Press = true;
-                }
+                    case WM_KEYUP:
+                        if (flag_Activate_EditMode == false)
+                        {
+                            PressedKeys.DeleteAnPressedKey(s_vkCode);
+                        }
+                        else
+                        {
+                            PressedKeys.SaveNewHotKeys();
+                            WorkWithSystemFiles.Events.CheckNewKeys(EventArgs.Empty);
+                            PressedKeys.DeleteAnPressedKey(s_vkCode);
 
-                if (m_Flag_Key_4_Press && m_Flag_Key_Ctrl_Press)
-                {
-                    MakeScreenshot.Make_Full_Screenshot();
-                    m_Flag_Key_4_Press = false;
-                    m_Flag_Key_Ctrl_Press = false;
+                            WorkWithSystemFiles.Events.DeactiveEditMode(EventArgs.Empty);
+
+                            flag_Activate_EditMode = false;
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
             }
             return CallNextHookEx(s_hookID, nCode, wParam, lParam);
@@ -85,9 +96,23 @@ namespace CaptureTool
 
         public static void ReadKeys()
         {
+            WorkWithSystemFiles.Events.activateEditMode += w_activateEditMode;
+            WorkWithSystemFiles.Events.closePreferencesWindow += deactivateEditMode;
+
             s_hookID = SetHook(s_proc);
             Application.Run();
             UnhookWindowsHookEx(s_hookID);
         }
+
+        static void w_activateEditMode(object sender, EventArgs e)
+        {
+            flag_Activate_EditMode = true;
+        }
+
+        private static void deactivateEditMode(object sender, EventArgs e)
+        {
+            flag_Activate_EditMode = false;
+        }
+
     }
 }

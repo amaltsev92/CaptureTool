@@ -45,7 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MakeScreenshot.cs" />
+    <Compile Include="Initilization\Initilization.cs" />
+    <Compile Include="WorkWithSystemFiles\Events.cs" />
+    <Compile Include="WorkWithSystemFiles\WorkerWithReg.cs" />
+    <Compile Include="PressedKeys.cs" />
+    <Compile Include="WorkWithSystemFiles\MakeScreenshot.cs" />
     <Compile Include="Preferences_Window.cs">
       <SubType>Form</SubType>
     </Compile>

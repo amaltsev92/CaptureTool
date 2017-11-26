@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace CaptureTool
 {
@@ -15,14 +14,7 @@ namespace CaptureTool
         [STAThread]
         static void Main()
         {
-            Thread readKeyThread = new Thread(ReadKeyThread.ReadKeys);
-            readKeyThread.Start();
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Preferences_Window());
-
-            readKeyThread.Abort();
+            Preferences_Window.StartPreferencesForm();
         }
     }
 }
