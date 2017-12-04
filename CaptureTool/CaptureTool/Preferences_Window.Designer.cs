@@ -100,7 +100,7 @@
             this.flagEditMode.AutoSize = true;
             this.flagEditMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.flagEditMode.ForeColor = System.Drawing.Color.Red;
-            this.flagEditMode.Location = new System.Drawing.Point(93, 231);
+            this.flagEditMode.Location = new System.Drawing.Point(104, 232);
             this.flagEditMode.Name = "flagEditMode";
             this.flagEditMode.Size = new System.Drawing.Size(0, 12);
             this.flagEditMode.TabIndex = 5;

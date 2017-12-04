@@ -35,7 +35,7 @@ namespace CaptureTool.WorkWithSystemFiles
             }
         }
 
-        public static void IsClosePreferencesWindow(EventArgs e)
+        public static void ClosePreferencesWindow(EventArgs e)
         {
             EventHandler handler = closePreferencesWindow;
             if (handler != null)

@@ -23,7 +23,7 @@ namespace CaptureTool.Initilization
             return registryHotKeysName;
         }
 
-        private static void StandardHotKeys()
+        private static void InitStandardHotKeys()
         {
             if (false == WorkWithSystemFiles.WorkerWithReg.KeyExists(registrySettingsName, registryHotKeysName))
             {
@@ -35,7 +35,7 @@ namespace CaptureTool.Initilization
 
         public static void InitForm()
         {
-            StandardHotKeys();
+            InitStandardHotKeys();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

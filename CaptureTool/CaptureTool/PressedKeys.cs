@@ -10,14 +10,20 @@ namespace CaptureTool
 {
     class PressedKeys
     {
-        private static List<int> currentPressedKeys = new List<int>();
+        private static List<int> currentPressedKeys;
 
-        private static List<int> defaultKeys = new List<int>();
+        private static List<int> defaultKeys;
         public static void SetDefaultKeys()
         {
             defaultKeys = WorkWithSystemFiles.WorkerWithReg.GetHotKeys(
                 Initilization.Initilization.GetRegistrySettingsName()
                 , Initilization.Initilization.GetRegistryHotKeysName());
+        }
+
+        static PressedKeys()
+        {
+            currentPressedKeys = new List<int>();
+            defaultKeys = new List<int>();
         }
 
         private static bool AreListsEqual(List<int> list1, List<int> list2)
@@ -44,9 +50,9 @@ namespace CaptureTool
             }
         }
 
-        public static void DeleteAnPressedKey(int anPressedKey)
+        public static void DeletePressedKey(int pressedKey)
         {
-            currentPressedKeys.Remove(anPressedKey);
+            currentPressedKeys.Remove(pressedKey);
         }
 
         public static void SaveNewHotKeys()
@@ -57,8 +63,6 @@ namespace CaptureTool
 
             SetDefaultKeys();
         }
-
-
 
         public static string CurrentPressedKeys()
         {
@@ -83,7 +87,5 @@ namespace CaptureTool
 
             return defaultHotKeys.Remove(defaultHotKeys.Length - 3);
         }
-
-
     }
 }

@@ -57,7 +57,7 @@ namespace CaptureTool
         {
             this.WindowState = FormWindowState.Minimized;
 
-            WorkWithSystemFiles.Events.IsClosePreferencesWindow(EventArgs.Empty);
+            WorkWithSystemFiles.Events.ClosePreferencesWindow(EventArgs.Empty);
         }
 
         private void changeHotKeysText(object sender, EventArgs e)
@@ -72,7 +72,7 @@ namespace CaptureTool
 
         private void EditHotKeyFullScreenMode_Click(object sender, EventArgs e)
         {
-            flagEditMode.Text = "EDIT MODE ACTIVE";
+            flagEditMode.Text = "Edit Mode is ON";
 
             WorkWithSystemFiles.Events.ActiveEditMode(EventArgs.Empty);
         }

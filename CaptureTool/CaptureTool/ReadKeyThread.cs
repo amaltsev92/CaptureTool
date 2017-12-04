@@ -17,11 +17,20 @@ namespace CaptureTool
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
 
-        private static bool flag_Activate_EditMode = false;
+        private static bool flag_Activate_EditMode;
 
-        private static int s_vkCode = 0;
-        private static LowLevelKeyboardProc s_proc = HookCallback;
-        private static IntPtr s_hookID = IntPtr.Zero;
+        private static int s_vkCode;
+        private static LowLevelKeyboardProc s_proc;
+        private static IntPtr s_hookID;
+
+        static ReadKeyThread()
+        {
+            flag_Activate_EditMode = false;
+
+            s_vkCode = 0;
+            s_proc = HookCallback;
+            s_hookID = IntPtr.Zero;
+        }
 
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
         {
@@ -60,13 +69,13 @@ namespace CaptureTool
                     case WM_KEYUP:
                         if (flag_Activate_EditMode == false)
                         {
-                            PressedKeys.DeleteAnPressedKey(s_vkCode);
+                            PressedKeys.DeletePressedKey(s_vkCode);
                         }
                         else
                         {
                             PressedKeys.SaveNewHotKeys();
                             WorkWithSystemFiles.Events.CheckNewKeys(EventArgs.Empty);
-                            PressedKeys.DeleteAnPressedKey(s_vkCode);
+                            PressedKeys.DeletePressedKey(s_vkCode);
 
                             WorkWithSystemFiles.Events.DeactiveEditMode(EventArgs.Empty);
 
@@ -96,7 +105,7 @@ namespace CaptureTool
 
         public static void ReadKeys()
         {
-            WorkWithSystemFiles.Events.activateEditMode += w_activateEditMode;
+            WorkWithSystemFiles.Events.activateEditMode += activateEditMode;
             WorkWithSystemFiles.Events.closePreferencesWindow += deactivateEditMode;
 
             s_hookID = SetHook(s_proc);
@@ -104,7 +113,7 @@ namespace CaptureTool
             UnhookWindowsHookEx(s_hookID);
         }
 
-        static void w_activateEditMode(object sender, EventArgs e)
+        private static void activateEditMode(object sender, EventArgs e)
         {
             flag_Activate_EditMode = true;
         }

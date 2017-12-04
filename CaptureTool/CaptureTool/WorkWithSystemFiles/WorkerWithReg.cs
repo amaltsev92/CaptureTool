@@ -15,31 +15,22 @@ namespace CaptureTool.WorkWithSystemFiles
             RegistryKey currentUserKey = Registry.CurrentUser;
             string[] allSubKeysNames = currentUserKey.GetSubKeyNames();
 
-            if (allSubKeysNames.Contains(registrySettingsName))
-            {
-                RegistryKey settingsKey = currentUserKey.CreateSubKey(registrySettingsName);
-
-                allSubKeysNames = settingsKey.GetSubKeyNames();
-
-                if (allSubKeysNames.Contains(registryHotKeysName))
-                {
-                    settingsKey = currentUserKey.CreateSubKey(registrySettingsName)
-                        .CreateSubKey(registryHotKeysName);
-
-                    allSubKeysNames = settingsKey.GetValueNames();
-
-                    if (allSubKeysNames.Count() == 1)
-                    {
-                        return false;
-                    }
-
-                    return true;
-                }
-
+            if (false == allSubKeysNames.Contains(registrySettingsName))
                 return false;
-            }
 
-            return false;
+            RegistryKey settingsKey = currentUserKey.CreateSubKey(registrySettingsName);
+
+            allSubKeysNames = settingsKey.GetSubKeyNames();
+
+            if (false == allSubKeysNames.Contains(registryHotKeysName))
+                return false;
+
+            settingsKey = currentUserKey.CreateSubKey(registrySettingsName)
+                .CreateSubKey(registryHotKeysName);
+
+            allSubKeysNames = settingsKey.GetValueNames();
+
+            return (allSubKeysNames.Count() != 1);
         }
 
         public static List<int> GetHotKeys(string registrySettingsName, string registryHotKeysName)

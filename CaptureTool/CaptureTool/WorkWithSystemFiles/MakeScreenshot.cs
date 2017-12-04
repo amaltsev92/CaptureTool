@@ -12,12 +12,9 @@ namespace CaptureTool.WorkWithSystemFiles
     {
         private static void Make_Screenshot(int offsetX, int offsetY, int widthArea, int heightArea, string pathToSave)
         {
-            Graphics graph = null;
-
             var bmp = new Bitmap(widthArea, heightArea);
 
-            graph = Graphics.FromImage(bmp);
-
+            Graphics graph = Graphics.FromImage(bmp);
             graph.CopyFromScreen(offsetX, offsetY, 0, 0, bmp.Size);
 
             bmp.Save(pathToSave);
@@ -25,15 +22,14 @@ namespace CaptureTool.WorkWithSystemFiles
 
         public static void Make_Full_Screenshot()
         {
-
-            int countScreen = 1;
+            int screenNum = 1;
 
             foreach (Screen screen in Screen.AllScreens)
             {
                 string pathToSave = (Environment.GetFolderPath(Environment.SpecialFolder.Desktop) 
-                    + "\\" + "Screen_" + countScreen.ToString() + " " 
+                    + "\\" + "Screen_" + screenNum.ToString() + " " 
                     + DateTime.Now.ToString().Replace(':', '_') + ".bmp");
-                ++countScreen;
+                ++screenNum;
 
                 Make_Screenshot(screen.Bounds.X, screen.Bounds.Y, screen.Bounds.Width, screen.Bounds.Height, pathToSave);
             }
