@@ -14,9 +14,7 @@ namespace CaptureTool
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Preferences_Window());
+            Preferences_Window.StartPreferencesForm();
         }
     }
 }

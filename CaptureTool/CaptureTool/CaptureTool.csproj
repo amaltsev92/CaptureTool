@@ -45,6 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Initilization\Initilization.cs" />
+    <Compile Include="WorkWithSystemFiles\Events.cs" />
+    <Compile Include="WorkWithSystemFiles\WorkerWithReg.cs" />
+    <Compile Include="PressedKeys.cs" />
+    <Compile Include="WorkWithSystemFiles\MakeScreenshot.cs" />
     <Compile Include="Preferences_Window.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +58,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadKeyThread.cs" />
     <EmbeddedResource Include="Preferences_Window.resx">
       <DependentUpon>Preferences_Window.cs</DependentUpon>
     </EmbeddedResource>
